@@ -39,8 +39,12 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <img src="images/webvivienda.webp" class="nav-link dropdown-toggle img-fluid" height="70px" width="70px" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></img>
+                <img src="{{url_for('static',filename='images/webvivienda.webp')}}" class="nav-link dropdown-toggle img-fluid" height="70px" width="70px" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></img>
                 <div id="carrito" class="dropdown-menu" aria-labelledby="navbarCollapse">
+
+
+
+
                     <table id="lista-carrito" class="table">
                         <thead>
                             <tr>
@@ -75,179 +79,20 @@
 
             <div class="card-deck mb-3 text-center">
 
+                {% for property in properties %}
                 <div class="card mb-4 shadow-sm">
                     <div class="card-header">
-                        <h4 class="my-0 font-weight-bold">Inmueble</h4>
+                        <h4 class="my-0 font-weight-bold">{{property['title']}}</h4>
                     </div>
                     <div class="card-body">
                         <img src="{{url_for('static',filename='images/portfolio/web/P1.webp')}}" class="card-img-top">
-                        <h1 class="card-title pricing-card-title precio">S/. <span class="">5000</span></h1>
-
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li></li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                        </ul>
-                        <a href="" class="btn btn-block btn-primary agregar-carrito" data-id="1">Comprar</a>
+                        <h1 class="card-title pricing-card-title precio">S/. <span class="">{{property['price']}}</span></h1>
+                        <a href="/carrito" class="btn btn-block btn-primary disabled agregar-carrito" data-id="1">ver Detalle</a>
                     </div>
                 </div>
-
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-bold">Inmueble </h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="{{url_for('static',filename='images/portfolio/web/P2.webp')}}" class="card-img-top">
-                        <h1 class="card-title pricing-card-title precio">S/. <span class="">3000</span></h1>
-
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li></li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                        </ul>
-                        <a href="" class="btn btn-block btn-primary agregar-carrito" data-id="2">Comprar</a>
-                    </div>
-                </div>
-
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-bold">Inmuebles</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="{{url_for('static',filename='images/portfolio/web/P3.webp')}}" class="card-img-top">
-                        <h1 class="card-title pricing-card-title precio">S/. <span class="">4000</span></h1>
-
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li></li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                        </ul>
-                        <a href="/carrito" class="btn btn-block btn-primary agregar-carrito" data-id="3">Comprar</a>
-                    </div>
-                </div>
+                {% endfor %}
 
             </div>
-
-            <div class="card-deck mb-3 text-center">
-
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-bold">Inmueble</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="{{url_for('static',filename='images/portfolio/web/P4.webp')}}" class="card-img-top">
-                        <h1 class="card-title pricing-card-title precio">S/. <span class="">5900</span></h1>
-
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li></li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                        </ul>
-                        <a href="/carrito" class="btn btn-block btn-primary agregar-carrito" data-id="4">Comprar</a>
-                    </div>
-                </div>
-
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-bold">Inmueble</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="{{url_for('static',filename='images/portfolio/web/P5.webp')}}" class="card-img-top">
-                        <h1 class="card-title pricing-card-title precio">S/. <span class="">5769</span></h1>
-
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li></li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                        </ul>
-                        <a href="/carrito" class="btn btn-block btn-primary agregar-carrito" data-id="5">Comprar</a>
-                    </div>
-                </div>
-
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-bold">Inmueble</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="{{url_for('static',filename='images/portfolio/web/P6.webp')}}" class="card-img-top">
-                        <h1 class="card-title pricing-card-title precio">S/. <span class="">2599</span></h1>
-
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li></li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                        </ul>
-                        <a href="/carrito" class="btn btn-block btn-primary agregar-carrito" data-id="6">Comprar</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="card-deck mb-3 text-center">
-
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-bold">LG</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="{{url_for('static',filename='images/portfolio/web/P8.webp')}}" class="card-img-top">
-                        <h1 class="card-title pricing-card-title precio">S/. <span class="">4299</span></h1>
-
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li></li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                        </ul>
-                        <a href="/carrito" class="btn btn-block btn-primary agregar-carrito" data-id="7">Comprar</a>
-                    </div>
-                </div>
-
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-bold">Inmueble</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="{{url_for('static',filename='images/portfolio/web/P9.webp')}}" class="card-img-top">
-                        <h1 class="card-title pricing-card-title precio">S/. <span class="">869</span></h1>
-
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li></li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                            <li>mmmmmm</li>
-                        </ul>
-                        <a href="/carrito" class="btn btn-block btn-primary agregar-carrito" data-id="8">Comprar</a>
-                    </div>
-                </div>
-
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-bold">Inmueble</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="{{url_for('static',filename='images/portfolio/web/P9.webp')}}" class="card-img-top">
-                        <h1 class="card-title pricing-card-title precio">S/. <span class="">5397</span></h1>
-
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li></li>
-                            <li>mmmmmm</li>
-                            <li> mmmmmm</li>
-                            <li>mmmmmm</li>
-                        </ul>
-                        <a href="/carrito" class="btn btn-block btn-primary agregar-carrito" data-id="9">Comprar</a>
-                    </div>
-                </div>
-
-            </div>
-
-
         </div>
     </main>
 

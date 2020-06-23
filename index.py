@@ -5,14 +5,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    response = req.get('https://jsonplaceholder.typicode.com/users')
-    result = response.json()
-    print(result)
     return render_template('index.html')
+
 
 @app.route('/portafolio')
 def portafolio():
-    return render_template('portfolio.html')
+    
+    response = req.get('http://localhost:3001/properties')
+    result = response.json()
+    print(result['data'])
+    return render_template('portfolio.html', properties =  result['data'])
 
 
 @app.route('/registro')
@@ -23,10 +25,25 @@ def registro():
 def login():
     return render_template('login.html')
 
+@app.route('/logeo')
+def logeo():
+    correo = request.form['email']    
+    # password = request.form['password']
+    print(correo, 'ga')
+    # addLogged = {"email": email, "password": password}
+    # response = req.post('http://localhost:3001/login', json= addLogged)
+    # result = response.json()
+    # print(result)
+    return redirect(url_for('portafolio'))
+
 @app.route('/carrito')
 def carrito():
     return render_template('carrito.html')
 
+
+@app.route('/admin')
+def read():
+    return render_template('añadir.html')
 
 
 if __name__ == "__main__":

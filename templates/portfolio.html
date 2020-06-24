@@ -87,7 +87,14 @@
                     <div class="card-body">
                         <img src="{{url_for('static',filename='images/portfolio/web/P1.webp')}}" class="card-img-top">
                         <h1 class="card-title pricing-card-title precio">S/. <span class="">{{property['price']}}</span></h1>
-                        <a href="/carrito" class="btn btn-block btn-primary disabled agregar-carrito" data-id="1">ver Detalle</a>
+
+                        {% if token %}
+                        <a href="/property-detail" class="btn btn-block btn-primary agregar-carrito" data-id="1">
+                            ver Detalle
+                        </a> {% else %}
+                        <a href="/property-detail" class="btn btn-block btn-primary disabled agregar-carrito" data-id="1">
+                            ver Detalle
+                        </a> {% endif %}
                     </div>
                 </div>
                 {% endfor %}

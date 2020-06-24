@@ -46,30 +46,29 @@
 
 
 </head>
-<form class="formulario">
+<form class="formulario" method="POST" action='/register'>
 
     <h1>Reguistrar usuario</h1>
     <div class="contenedor">
 
         <div class="input-contenedor">
             <i class="fas fa-user icon"></i>
-            <input type="txt" class="form-control" placeholder="nombre" />
+            <input type="txt" class="form-control" placeholder="name" name='name' />
 
         </div>
 
         <div class="input-contenedor">
             <i class="fas fa-envelope icon"></i>
-            <input type="txt" class="form-control" placeholder="apellido" />
+            <input type="txt" class="form-control" placeholder="lastname" name='lastname' />
         </div>
         <div class="input-contenedor">
             <i class="fas fa-envelope icon"></i>
-            <input type="txt" class="form-control" placeholder="correo" />
+            <input type="txt" class="form-control" placeholder="email" name='email' />
         </div>
 
         <div class="input-contenedor">
             <i class="fas fa-key icon"></i>
             <input type="password" class="form-control" placeholder="password" name="password" />
-
         </div>
         <input type="submit" value="Reguistrar" class="button">
         <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>

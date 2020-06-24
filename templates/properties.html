@@ -45,7 +45,7 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">inmuebles</a></li>
+            <li class="breadcrumb-item"><a href="/admin">inmuebles</a></li>
             <li class="breadcrumb-item active" aria-current="page">añadir inmuebles</li>
         </ol>
     </nav>
@@ -56,54 +56,32 @@
         <table id="customers">
             <tr>
                 <th>nro</th>
-                <th>Titulo</th>
-                <th>Direcion</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
+                <th>title</th>
+                <th>type</th>
+                <th>address</th>
+                <th>rooms</th>
+                <th>price</th>
+                <th>area</th>
+                <th>Acciones</th>
+                <th>Acciones</th>
             </tr>
+            {% for property in properties %}
             <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-
+                <td>{{property['_id']}}</td>
+                <td>{{property['title']}}</td>
+                <td>{{property['type']}}</td>
+                <td>{{property['address']}}</td>
+                <td>{{property['rooms']}}</td>
+                <td>{{property['price']}}</td>
+                <td>{{property['area']}}</td>
+                <td>
+                    <a href="/editar">Editar</a>
                 </td>
-                <td> </td>
+                <td>
+                    <a href="/eliminar">Eliminar</a>
+                </td>
             </tr>
-            <tr>
-                <td>Berglunds snabbköp</td>
-                <td>Christina Berglund</td>
-                <td>Sweden</td>
-                <td> </td>
-                <td> </td>
-            </tr>
-            <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-                <td> </td>
-                <td> </td>
-            </tr>
-            <tr>
-                <td>Ernst Handel</td>
-                <td>Roland Mendel</td>
-                <td>Austria</td>
-                <td> </td>
-                <td> </td>
-            </tr>
-            <tr>
-                <td>Island Trading</td>
-                <td>Helen Bennett</td>
-                <td>UK</td>
-                <td> </td>
-                <td> </td>
-            </tr>
-
-            <td>Paris spécialités</td>
-            <td>Marie Bertrand</td>
-            <td>France</td>
-            <td> </td>
-            <td> </td>
-            </tr>
+            {% endfor %}
         </table>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

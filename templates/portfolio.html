@@ -29,9 +29,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/portafolio">portafolio</a>
                 </li>
+                {% if token %}
+                <li>Bienvenido</li>
+                {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Reguistrase</a>
+                    <a class="nav-link" href="/login">Iniciar sesion</a>
                 </li>
+                {% endif %}
     </nav>
 
     <br/><br/><br/>
@@ -89,10 +93,11 @@
                         <h1 class="card-title pricing-card-title precio">S/. <span class="">{{property['price']}}</span></h1>
 
                         {% if token %}
-                        <a href="/property-detail" class="btn btn-block btn-primary agregar-carrito" data-id="1">
+
+                        <a href="/property-detail?id={{property['_id']}}" class="btn btn-block btn-primary agregar-carrito" data-id="1">
                             ver Detalle
                         </a> {% else %}
-                        <a href="/property-detail" class="btn btn-block btn-primary disabled agregar-carrito" data-id="1">
+                        <a href="/property-detail?id={{property['_id']}}" class="btn btn-block btn-primary disabled agregar-carrito" data-id="1">
                             ver Detalle
                         </a> {% endif %}
                     </div>

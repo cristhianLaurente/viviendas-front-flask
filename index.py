@@ -24,11 +24,24 @@ def portafolio():
 
 @app.route('/property-detail')
 def propertyDetail():
-    return render_template('propertydetails.html')
+    id = request.args.get('id')
+    if 'token' in session:
+        response = req.get(f'http://localhost:3001/property/{id}')
+        print(response)
+        if response.status_code == 200:
+            result = response.json()
+            return render_template('propertydetails.html', property=result['data'])
+        else:
+            print('mall')
+    else:
+        return redirect(url_for('portafolio'))
 
 @app.route('/registro')
 def registro():
-    return render_template('reguistro.html')
+    if 'token' in session:        
+        return redirect(url_for('portafolio'))
+    else:
+        return render_template('reguistro.html')
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -43,7 +56,10 @@ def register():
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    if 'token' in session:
+        return redirect(url_for('portafolio'))
+    else:
+        return render_template('login.html')
 
 @app.route('/logeo', methods=['POST'])
 def logeo():
@@ -55,20 +71,22 @@ def logeo():
     session['token'] = result['token']
     return redirect(url_for('portafolio'))
 
-@app.route('/carrito')
-def carrito():
-    return render_template('carrito.html')
-
 
 @app.route('/admin')
 def admin():
-    response = req.get('http://localhost:3001/properties')
-    result = response.json()
-    return render_template('properties.html', properties =  result['data'])
+    if 'superuser' in session :
+        response = req.get('http://localhost:3001/properties')
+        result = response.json()
+        return render_template('properties.html', properties =  result['data'])
+    else :
+        return redirect(url_for('loginadmin'))
 
 @app.route('/loginadmin')
 def loginadmin():
-    return render_template('loginadmin.html')
+    if 'superuser' in session:
+        return redirect(url_for('admin'))
+    else:
+        return render_template('loginadmin.html')
 
 @app.route('/loginadminuser', methods=['POST'])
 def loginadminuser():
@@ -88,16 +106,76 @@ def edit():
         token = session['superuser']
         headers = {"token": token}
         response = req.get(f'http://localhost:3001/property/{id}', headers = headers)
-        result = response.json()
-        return render_template('editproperty.html', property = result['data'])
+        if response.status_code == 200 :
+            result = response.json()
+            return render_template('editproperty.html', property = result['data'])
+        else:
+            print('mallll') 
+    else:
+        return render_template('loginadmin')
+
+
+@app.route('/add')
+def add():
+    if 'superuser' in session:
+        return render_template('addproperty.html')
+    else:
+        return redirect(url_for('loginadmin'))
+
+@app.route('/addproperty', methods=['POST'] )
+def addproperty():
+    if 'superuser' in session:
+        token = session['superuser']
+        headers = {"token": token}
+        title = request.form['title']    
+        tipo = request.form['type']
+        address = request.form['address']
+        rooms = request.form['rooms']
+        price = request.form['price']
+        area = request.form['area']
+        addProperty = {"title": title, "type": tipo, "address": address, "rooms":rooms, "price": price, "area":area}
+        response = req.post('http://localhost:3001/property/', headers= headers, json=addProperty)
+        if response.status_code == 201:
+            return redirect(url_for('admin'))
+        else:
+            print('mall')
+    else:
+        return redirect(url_for('loginadmin'))
 
 
 @app.route('/editproperty', methods=['POST'])
 def editproperty():
     id = request.args.get('id')
-    print(id, 'id superuser')
-    return redirect(url_for('admin'))
-
-
+    if 'superuser' in session:
+        token = session['superuser']
+        headers = {"token": token}
+        title = request.form['title']    
+        tipo = request.form['type']
+        address = request.form['address']
+        rooms = request.form['rooms']
+        price = request.form['price']
+        area = request.form['area']
+        updateProperty = {"title": title, "type": tipo, "address": address, "rooms":rooms, "price": price, "area":area}
+        response = req.put(f'http://localhost:3001/property/{id}', headers= headers, json=updateProperty)
+        if response.status_code == 200 :
+            return redirect(url_for('admin'))
+        else:
+            print('mallll')            
+    else :
+        return redirect(url_for('loginadmin'))
+    
+@app.route('/delete')
+def delete():
+    id = request.args.get('id')
+    if 'superuser' in session:
+        token = session['superuser']
+        headers = {"token": token}
+        response = req.delete(f'http://localhost:3001/property/{id}', headers=headers)
+        if response.status_code == 200:
+            return redirect(url_for('admin'))
+        else :
+            print('malll')
+    else:
+        return redirect(url_for('loginadmin'))
 if __name__ == "__main__":
     app.run(debug=True)

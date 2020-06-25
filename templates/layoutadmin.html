@@ -45,41 +45,8 @@
     </nav>
 
     <div class="container-fluid">
-        <table id="customers">
-            <tr>
-                <th>nro</th>
-                <th>title</th>
-                <th>type</th>
-                <th>address</th>
-                <th>rooms</th>
-                <th>price</th>
-                <th>area</th>
-                <th>Acciones</th>
-                <th>Acciones</th>
-            </tr>
-            {% for property in properties %}
-            <tr>
-                <td>{{property['_id']}}</td>
-                <td>{{property['title']}}</td>
-                <td>{{property['type']}}</td>
-                <td>{{property['address']}}</td>
-                <td>{{property['rooms']}}</td>
-                <td>{{property['price']}}</td>
-                <td>{{property['area']}}</td>
-                <td>
-                    <a href="/edit?id={{property['_id']}}">Editar</a>
-                </td>
-                <td>
-                    <a href="/delete?id={{property['_id']}}">Eliminar</a>
-                </td>
-            </tr>
-            <div class="container">
-                {% block content %} {% endblock %}
-            </div>
-            {% endfor %}
-        </table>
+        {% block content %} {% endblock %}
     </div>
-
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

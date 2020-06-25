@@ -14,11 +14,12 @@ def index():
 def portafolio():
     
     response = req.get('http://localhost:3001/properties')
-    result = response.json()    
+    result = response.json() 
+    print(result)   
     if 'token' in session:
         key = session['token']
     else:
-        key = false
+        key = ''
     return render_template('portfolio.html', properties =  result['data'], token = key )
 
 @app.route('/property-detail')
@@ -60,10 +61,42 @@ def carrito():
 
 
 @app.route('/admin')
-def read():
+def admin():
     response = req.get('http://localhost:3001/properties')
     result = response.json()
     return render_template('properties.html', properties =  result['data'])
+
+@app.route('/loginadmin')
+def loginadmin():
+    return render_template('loginadmin.html')
+
+@app.route('/loginadminuser', methods=['POST'])
+def loginadminuser():
+    email = request.form['email']    
+    password = request.form['password']
+    addLogged = {"email": email, "password": password}
+    response = req.post('http://localhost:3001/login', json= addLogged)
+    result = response.json()
+    session['superuser'] = result['token']
+    return redirect(url_for('admin'))
+   
+
+@app.route('/edit')
+def edit():
+    id = request.args.get('id')
+    if 'superuser' in session:
+        token = session['superuser']
+        headers = {"token": token}
+        response = req.get(f'http://localhost:3001/property/{id}', headers = headers)
+        result = response.json()
+        return render_template('editproperty.html', property = result['data'])
+
+
+@app.route('/editproperty', methods=['POST'])
+def editproperty():
+    id = request.args.get('id')
+    print(id, 'id superuser')
+    return redirect(url_for('admin'))
 
 
 if __name__ == "__main__":

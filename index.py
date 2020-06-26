@@ -7,19 +7,23 @@ app.secret_key = 'key-secret'
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-
-@app.route('/portafolio')
-def portafolio():
-    
-    response = req.get('http://localhost:3001/properties')
-    result = response.json() 
-    print(result)   
     if 'token' in session:
         key = session['token']
     else:
         key = ''
+    return render_template('index.html', token= key)
+    
+@app.route('/portafolio')
+def portafolio():    
+    response = req.get('http://localhost:3001/properties')
+    if response.status_code == 200:
+        result = response.json()                
+        if 'token' in session:
+            key = session['token']
+        else:
+            key = ''
+    else:
+        print('mal')
     return render_template('portfolio.html', properties =  result['data'], token = key )
 
 @app.route('/property-detail')
@@ -27,10 +31,9 @@ def propertyDetail():
     id = request.args.get('id')
     if 'token' in session:
         response = req.get(f'http://localhost:3001/property/{id}')
-        print(response)
         if response.status_code == 200:
-            result = response.json()
-            return render_template('propertydetails.html', property=result['data'])
+            result = response.json()               
+            return render_template('propertydetails.html', property=result['data'], token= session['token'] )
         else:
             print('mall')
     else:
@@ -67,17 +70,32 @@ def logeo():
     password = request.form['password']
     addLogged = {"email": email, "password": password}
     response = req.post('http://localhost:3001/login', json= addLogged)
-    result = response.json()
-    session['token'] = result['token']
-    return redirect(url_for('portafolio'))
+    if response.status_code == 200:
+        result = response.json()
+        session['token'] = result['token']
+        return redirect(url_for('portafolio'))
+    else: 
+        return render_template('erroruser.html')
+
+@app.route('/logout')
+def logout():
+    if 'token' in session:
+        session.pop('token', None)
+        return redirect(url_for('index'))
 
 
 @app.route('/admin')
 def admin():
     if 'superuser' in session :
-        response = req.get('http://localhost:3001/properties')
-        result = response.json()
-        return render_template('properties.html', properties =  result['data'])
+        token = session['superuser']
+        headers = {"token": token }
+        response = req.get('http://localhost:3001/propertiesadmin', headers= headers)
+        if response.status_code == 200:
+            result = response.json()
+            return render_template('properties.html', properties =  result['data'])
+        else:
+            session.pop('superuser',None)
+            return render_template('erroradmin.html')
     else :
         return redirect(url_for('loginadmin'))
 
@@ -94,9 +112,12 @@ def loginadminuser():
     password = request.form['password']
     addLogged = {"email": email, "password": password}
     response = req.post('http://localhost:3001/login', json= addLogged)
-    result = response.json()
-    session['superuser'] = result['token']
-    return redirect(url_for('admin'))
+    if response.status_code == 200:
+        result = response.json()
+        session['superuser'] = result['token']
+        return redirect(url_for('admin'))
+    else:
+        return render_template('erroradmin.html')
    
 
 @app.route('/edit')
@@ -177,5 +198,13 @@ def delete():
             print('malll')
     else:
         return redirect(url_for('loginadmin'))
+
+@app.route('/signoff')
+def signoff():
+    if 'superuser' in session:
+        session.pop('superuser', None)
+        return redirect(url_for('loginadmin'))
+
+
 if __name__ == "__main__":
     app.run(debug=True)

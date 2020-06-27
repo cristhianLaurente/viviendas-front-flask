@@ -10,36 +10,45 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
-
-    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
-
     <!-- My CSS -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <title>webvivienda.com</title>
-
-
 </head>
 
 <body>
-    <form class="formulario" method="POST" action="/loginadminuser">
 
-        <h1>login administrador</h1>
+    <form class="formulario" method="POST" action='/registeradminform'>
+
+        <h1>Reguistrar usuario</h1>
         <div class="contenedor">
 
             <div class="input-contenedor">
+                <i class="fas fa-user icon"></i>
+                <input type="txt" class="form-control" placeholder="name" name='name' />
+
+            </div>
+
+            <div class="input-contenedor">
                 <i class="fas fa-envelope icon"></i>
-                <input type="email" class="form-control" placeholder="Correo Eletronico" name="email" />
+                <input type="txt" class="form-control" placeholder="lastname" name='lastname' />
+            </div>
+            <div class="input-contenedor">
+                <i class="fas fa-envelope icon"></i>
+                <input type="txt" class="form-control" placeholder="email" name='email' />
             </div>
 
             <div class="input-contenedor">
                 <i class="fas fa-key icon"></i>
                 <input type="password" class="form-control" placeholder="password" name="password" />
             </div>
-            <button type='submit' class="button">Iniciar sesión</button>
-        </div>
-        <a href="/registeradmin">Registrarse como administrador</a>
-    </form>
+            <input type="submit" value="Reguistrar" class="button">
+            <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
+            <p><a class="link" href="/loginadmin">Iniciar Sesión </a></p>
 
+
+        </div>
+    </form>
 </body>
 
 </html>
